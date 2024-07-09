@@ -1,7 +1,12 @@
-Simple Structure:
+# Bird-Eye View
+---
+## GraphQL/REST API endpoint
+Open Tasks:
+-create endpoint
 
-(1) GraphQL/REST API endpoint >> 
-(2) AI Model >>
-(3) Action Forecast Performance !!
+## Regression Model
+- TBD
 
-___________________________________
+## Action Forecast Performance
+- TBD
+
