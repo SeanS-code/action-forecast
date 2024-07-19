@@ -1,1 +1,9 @@
+node-modules
+package-lock.json
+package.json
+
+env
+requirements.txt
+
 README-breakdown.md
+test

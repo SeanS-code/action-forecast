@@ -1,12 +1,10 @@
 # Bird-Eye View
----
-## GraphQL/REST API endpoint
-Open Tasks:
--create endpoint
 
-## Regression Model
-- TBD
+## Endpoints
 
-## Action Forecast Performance
-- TBD
+### Current Technologies/Principles:
 
+REST API
+GraphQL
+FastAPI
+Python
