@@ -2,9 +2,11 @@
 
 ## Endpoints
 
-### Current Technologies/Principles:
+### Used Software:
 
-REST API
-GraphQL
-FastAPI
-Python
+REST API\
+GraphQL\
+FastAPI\
+Python\
+Strawberry GraphQL\
+Postman
