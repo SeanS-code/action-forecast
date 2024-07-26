@@ -1,4 +1,4 @@
-# Bird-Eye View
+# Action Forecast
 
 ## Endpoints
 
@@ -6,7 +6,13 @@
 
 REST API\
 GraphQL\
+\
 FastAPI\
 Python\
 Strawberry GraphQL\
+\
 Postman
+
+## Model
+
+### Used Software:
