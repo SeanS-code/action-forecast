@@ -1,9 +1,6 @@
-node_modules/
-package-lock.json
-package.json
-
-env
+.venv/
+dist/
 requirements.txt
 
 README-breakdown.md
-test
+TODO.md
