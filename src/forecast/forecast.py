@@ -1,14 +1,8 @@
-from fastapi import FastAPI
-app = FastAPI()
+import forecast 
 
-@app.get("/")
-def read_root():
-    return{"Root": "Root"}
+def main():
+    print("Call forecast code directly from the command line")
 
-@app.get("/hello")
-def hello_world():
-    return {"Hello": "World"}
+if __name__ == "__main__":
+    main()
 
-@app.get("/bye")
-def good_bye():
-    return {"Good": "Bye"}
