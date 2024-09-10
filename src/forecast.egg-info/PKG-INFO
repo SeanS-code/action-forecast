@@ -34,6 +34,7 @@ Requires-Dist: markdown-it-py==3.0.0
 Requires-Dist: MarkupSafe==2.1.5
 Requires-Dist: mdurl==0.1.2
 Requires-Dist: pandas==2.2.2
+Requires-Dist: pathlib==1.0.1
 Requires-Dist: pydantic==2.8.2
 Requires-Dist: pydantic_core==2.20.1
 Requires-Dist: Pygments==2.18.0

@@ -1,6 +1,9 @@
+# Folders
 .venv/
 dist/
-requirements.txt
+data/
 
+# Files
+requirements.txt
 README-breakdown.md
 TODO.md
