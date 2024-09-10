@@ -9,6 +9,7 @@ def main():
 
 
 def api():
+    # skipcq: BAN-B104
     uvicorn.run("forecast.forecastapi:app", host="0.0.0.0", port=8000, reload=True)
 
 

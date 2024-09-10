@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import mean_absolute_error
+# from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
 from pathlib import Path
@@ -18,8 +18,6 @@ modelpkldump_path = Path(__file__).parent.parent.parent
 
 csv_file = base_path / "sample_data" / "melb_data.csv"
 data = pd.read_csv(csv_file)
-
-#data.columns
 data.describe()
 
 features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']

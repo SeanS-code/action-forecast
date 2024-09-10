@@ -2,6 +2,12 @@ version = 1
 
 [[analyzers]]
 name = "python"
+enabled = true
 
   [analyzers.meta]
+  skip_doc_coverage = ["module", "magic", "init", "class"]
   runtime_version = "3.x.x"
+
+[[transformers]]
+name = "black"
+enabled = true
