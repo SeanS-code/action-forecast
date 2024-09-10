@@ -18,7 +18,8 @@ modelpkldump_path = Path(__file__).parent.parent.parent
 
 csv_file = base_path / "sample_data" / "melb_data.csv"
 data = pd.read_csv(csv_file)
-data.columns
+
+#data.columns
 data.describe()
 
 features = ['Rooms', 'Bathroom', 'Landsize', 'Lattitude', 'Longtitude']

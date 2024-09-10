@@ -1,4 +1,4 @@
-from forecast.redis import createreq, returnreq, returnallreq
+from forecast.redis import createreq, returnreq, returnkeys
 from pathlib import Path
 
 import numpy as np
@@ -70,7 +70,7 @@ def predictres(requestid):
     print("--- Input Features")
     print(input_features)
     print(" ")
-    
+
     prediction = model.predict(input_features)
     #prediction_json = json.dumps({"results": prediction[0]})
     prediction_json = json.dumps(prediction[0])
@@ -96,5 +96,5 @@ def predictres(requestid):
     return response_json
 
 def returnallreq():
-    allreqs = returnallreq()
+    allreqs = returnkeys()
     return allreqs

@@ -19,20 +19,11 @@ def returnreq(requestid:str):
     print("--- r.get Results ")
     print(r.get(requestid))
     print(" ")
-    
+
     dataenc = r.get(requestid)
     return dataenc
 
-def returnallreq():
+def returnkeys():
     allkeys = r.keys()
     print(allkeys)
     return allkeys
-
-# def taskID_value(task_id, response):
-#     res = r.set(task_id, str(response))
-#     return res
-
-# def client_task(value):
-#     r.set("ctask"+str(k), value)
-#     return "ctask"+str(k)
-

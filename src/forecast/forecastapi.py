@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks, File, UploadFile, Request
+from fastapi import FastAPI, BackgroundTasks, Request
 from forecast.graphql.schema import graphql_app
 from forecast import forecast
 
@@ -25,14 +25,14 @@ async def predictreq(request: Request, background_tasks: BackgroundTasks):
 async def predictres(requestid: str):
 
     res = forecast.predictres(requestid)
-    
+
     return {"results": res}
 
 @app.get("/results")
 async def returnallreq():
 
     res = forecast.returnallreq()
-    
+
     return {"results": res}
 
 # GraphQL endpoint

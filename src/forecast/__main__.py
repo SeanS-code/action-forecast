@@ -6,9 +6,11 @@ def main():
     # , 2.555556, 37.88, -122.23
     requestid = forecast.submitreq(data)
     forecast.predictres(requestid)
-     
+
+
 def api():
     uvicorn.run("forecast.forecastapi:app", host="0.0.0.0", port=8000, reload=True)
+
 
 if __name__ == '__main__':
     main()
