@@ -7,5 +7,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-
 # https://realpython.com/absolute-vs-relative-python-imports/
