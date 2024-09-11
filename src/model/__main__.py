@@ -1,3 +1,4 @@
+# skipcq:  PY-W2000
 from model import model
 
 def main():

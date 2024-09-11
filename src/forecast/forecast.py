@@ -72,7 +72,6 @@ def predictres(requestid):
     print(" ")
 
     prediction = model.predict(input_features)
-    #prediction_json = json.dumps({"results": prediction[0]})
     prediction_json = json.dumps(prediction[0])
 
     predenc = (base64.b64encode(prediction_json.encode('utf-8'))).decode('utf-8')
