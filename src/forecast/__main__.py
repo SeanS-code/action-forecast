@@ -10,7 +10,7 @@ def main():
     forecast.predictres(requestid)
 
     ## Profiling
-    
+
     # Submit Request
     # profile.runctx('forecast.submitreq(data)', globals(), locals(), filename="prof1.out")
     # profile.runctx('forecast.submitreq(data)', globals(), locals())
