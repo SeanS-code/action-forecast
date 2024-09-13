@@ -1,13 +1,16 @@
 from forecast.redis import createreq, returnreq, returnkeys
 from pathlib import Path
+from time import perf_counter
 
 import numpy as np
-
 import datetime
 import uuid
 import base64
 import json
 import joblib
+
+import cProfile
+from memory_profiler import profile
 
 modelpkldump_path = Path(__file__).parent.parent.parent
 
@@ -51,7 +54,7 @@ def submitreq(data):
 
     return requestid
 
-
+@profile
 def predictres(requestid):
     request_dict = json.loads(returnreq(requestid))
     dataenc = request_dict["request"]["data"]["args"]
@@ -71,13 +74,17 @@ def predictres(requestid):
     print(input_features)
     print(" ")
 
+    start = perf_counter()
     prediction = model.predict(input_features)
+    duration = perf_counter() - start
+
     prediction_json = json.dumps(prediction[0])
 
     predenc = (base64.b64encode(prediction_json.encode('utf-8'))).decode('utf-8')
 
     request_dict["response"]["data"]["args"] = predenc
     request_dict["response"]["message"] = "Complete"
+    request_dict["response"]["restime"] = duration
 
     dumped_json = json.dumps(request_dict)
     response_json = json.loads(dumped_json)
