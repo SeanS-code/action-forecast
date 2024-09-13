@@ -16,7 +16,7 @@ def main():
     # profile.runctx('forecast.submitreq(data)', globals(), locals())
 
     # Predict Reponse
-    # profile.runctx('forecast.predictres(requestid)', globals(), locals(), filename="prof2.out")
+    profile.runctx('forecast.predictres(requestid)', globals(), locals(), filename="prof2.out")
     # profile.runctx('forecast.predictres(requestid)', globals(), locals())
     # snakeviz prof.out in terminal
 
