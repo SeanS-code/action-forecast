@@ -1,6 +1,8 @@
 from forecast.redis import createreq, returnreq, returnkeys
 from pathlib import Path
 from time import perf_counter
+from memory_profiler import profile
+
 
 import numpy as np
 import datetime
@@ -8,9 +10,6 @@ import uuid
 import base64
 import json
 import joblib
-
-import cProfile
-from memory_profiler import profile
 
 modelpkldump_path = Path(__file__).parent.parent.parent
 
