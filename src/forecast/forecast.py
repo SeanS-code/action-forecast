@@ -48,12 +48,14 @@ def submitreq(requestid, data):
         }
     }
 
-    predictmodel(requestid)
+    createreq(requestid, json.dumps(request_json))
     current_time = datetime.datetime.now().strftime("%M%S - %f")
     
     print(" ")
     print(f"--- xxx1 {requestid} | Current Time: {current_time}, Data: {request_json['response']['message']}")
     print(" ")
+
+    predictmodel(requestid)
 
 #@profile
 def predictmodel(requestid):
