@@ -4,8 +4,8 @@ from forecast import forecast
 
 app = FastAPI()
 
-def predict(requestid: str):
-    forecast.predictres(requestid)
+def callmodel(requestid: str, data: str):
+    forecast.submitreq(requestid, data)
 
 @app.get("/")
 async def root():
@@ -15,14 +15,14 @@ async def root():
 async def predictreq(request: Request, background_tasks: BackgroundTasks):
     data = await request.json()
 
-    requestid = forecast.submitreq(data)
+    requestid = forecast.generatereq()
 
-    background_tasks.add_task(predict, requestid)
+    background_tasks.add_task(callmodel, requestid, data)
 
     return {"results": f"/results/{requestid}"}
 
 @app.get("/results/{requestid}")
-async def predictres(requestid: str):
+async def resultsres(requestid: str):
 
     res = forecast.predictres(requestid)
 
