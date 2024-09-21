@@ -2,10 +2,19 @@ from fastapi import FastAPI, BackgroundTasks, Request
 from forecast.graphql.schema import graphql_app
 from forecast import forecast
 
+import os
+
+# export UNRELIABLE=True before starting forecastapi
+unreliable = os.environ.get("UNRELIABLE")
+
 app = FastAPI()
 
-def callmodel(requestid: str, data: str):
+def asyncreqsubmit(requestid: str, data: str):
     forecast.submitreq(requestid, data)
+    forecast.predictmodel(requestid)
+
+def reqsubmit(requestid: str):
+    forecast.predictmodel(requestid)
 
 @app.get("/")
 async def root():
@@ -17,7 +26,12 @@ async def predictreq(request: Request, background_tasks: BackgroundTasks):
 
     requestid = forecast.generatereq()
 
-    background_tasks.add_task(callmodel, requestid, data)
+    # check if the "UNRELIABLE" environment variable exists
+    if unreliable is not None and unreliable == "True": 
+        background_tasks.add_task(asyncreqsubmit, requestid, data)
+    else:
+        forecast.submitreq(requestid, data)
+        background_tasks.add_task(reqsubmit, requestid)
 
     return {"results": f"/results/{requestid}"}
 

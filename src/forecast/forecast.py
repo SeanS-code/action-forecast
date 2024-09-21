@@ -1,3 +1,4 @@
+import os
 from forecast.redis import createreq, returnreq, savereq, returnkeys
 from pathlib import Path
 from time import perf_counter
@@ -9,6 +10,9 @@ import uuid
 import base64
 import json
 import joblib
+
+# check if the "UNRELIABLE" environment variable exists
+profile = os.environ.get("ENABLE_PROFILING")
 
 modelpkldump_path = Path(__file__).parent.parent.parent
 
@@ -24,41 +28,51 @@ def generatereq():
     return requestid
 
 def submitreq(requestid, data):
+
+    if profile is not None and profile == "True": 
+        start = perf_counter()
+
+    message = "In Progress"
+
     if type(data) is dict:
         data = json.dumps(data)
 
     dataenc = (base64.b64encode(data.encode('utf-8'))).decode('utf-8')
-    current_date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+    current_date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S.%f")
 
     request_json = {
         "requestid": requestid,
+        "message": message,
         "request": {
-            "taskid": requestid,
             "reqdate": current_date,
             "data": {
                 "args": dataenc
             }
         },
         "response": {
-            "requestid": requestid,
-            "reqdate": current_date,
+            "resdate": 0,
             "restime": 0,
-            "message": "In Progress",
             "data": {}
         }
     }
 
     createreq(requestid, json.dumps(request_json))
-    current_time = datetime.datetime.now().strftime("%M%S - %f")
-    
-    print(" ")
-    print(f"--- xxx1 {requestid} | Current Time: {current_time}, Data: {request_json['response']['message']}")
-    print(" ")
 
-    predictmodel(requestid)
+    if profile is not None and profile == "True": 
+        duration = perf_counter() - start
 
-#@profile
+        print(" ")
+        print(f"--- xxx1 {requestid} | Response Time: {duration}, Data: {message}")
+        print(" ")
+
+
+@profile
 def predictmodel(requestid):
+
+    if profile is not None and profile == "True": 
+        start = perf_counter()
+
     request_dict = json.loads(returnreq(requestid))
     dataenc = request_dict["request"]["data"]["args"]
 
@@ -66,6 +80,8 @@ def predictmodel(requestid):
     data_dict = json.loads(datadec)
 
     input_features = np.array(data_dict['features']).reshape(1, -1)
+
+    current_date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S.%f")
 
     start = perf_counter()
     prediction = model.predict(input_features)
@@ -75,18 +91,23 @@ def predictmodel(requestid):
 
     predenc = (base64.b64encode(prediction_json.encode('utf-8'))).decode('utf-8')
 
-    request_dict["response"]["data"]["args"] = predenc
-    request_dict["response"]["message"] = "Complete"
+    request_dict["message"] = "Complete"
+
+    request_dict["response"]["data"]["result"] = predenc
     request_dict["response"]["restime"] = duration
+    request_dict["response"]["resdate"] = current_date
 
     dumped_json = json.dumps(request_dict)
     response_json = json.loads(dumped_json)
 
     savereq(requestid, dumped_json)
 
-    print(" ")
-    print(f"--- xxx2 {requestid} | Response Time: {duration}, Data: {request_dict['response']['message']}")
-    print(" ")
+    if profile is not None and profile == "True": 
+        duration = perf_counter() - start
+
+        print(" ")
+        print(f"--- xxx2 {requestid} | Response Time: {duration} | Response Date: {current_date}, Data: {request_dict["message"]}")
+        print(" ")
 
     return response_json
 
