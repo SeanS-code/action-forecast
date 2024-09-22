@@ -9,16 +9,20 @@ unreliable = os.environ.get("UNRELIABLE")
 
 app = FastAPI()
 
+
 def asyncreqsubmit(requestid: str, data: str):
     forecast.submitreq(requestid, data)
     forecast.predictmodel(requestid)
 
+
 def reqsubmit(requestid: str):
     forecast.predictmodel(requestid)
+
 
 @app.get("/")
 async def root():
     return {"message": "Forecast API"}
+
 
 @app.post("/predict")
 async def predictreq(request: Request, background_tasks: BackgroundTasks):
@@ -35,6 +39,7 @@ async def predictreq(request: Request, background_tasks: BackgroundTasks):
 
     return {"results": f"/results/{requestid}"}
 
+
 @app.get("/results/{requestid}")
 async def resultsres(requestid: str):
 
@@ -42,12 +47,14 @@ async def resultsres(requestid: str):
 
     return {"results": res}
 
+
 @app.get("/results")
 async def returnallreq():
 
     res = forecast.returnallreq()
 
     return {"results": res}
+
 
 # GraphQL endpoint
 app.include_router(graphql_app, prefix="/graphql")

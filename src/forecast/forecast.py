@@ -2,7 +2,7 @@ import os
 from forecast.redis import createreq, returnreq, savereq, returnkeys
 from pathlib import Path
 from time import perf_counter
-from memory_profiler import profile
+# from memory_profiler import profile
 
 import numpy as np
 import datetime
@@ -22,10 +22,12 @@ modelpkldump_file = modelpkldump_path / "data" / "model.pkl"
 # Load the model
 model = joblib.load(modelpkldump_file)
 
+
 def generatereq():
     requestid = str(uuid.uuid4())
 
     return requestid
+
 
 def submitreq(requestid, data):
 
@@ -67,7 +69,7 @@ def submitreq(requestid, data):
         print(" ")
 
 
-@profile
+#@profile
 def predictmodel(requestid):
 
     if profile is not None and profile == "True": 
@@ -106,15 +108,17 @@ def predictmodel(requestid):
         duration = perf_counter() - start
 
         print(" ")
-        print(f"--- xxx2 {requestid} | Response Time: {duration} | Response Date: {current_date}, Data: {request_dict["message"]}")
+        print(f"--- xxx2 {requestid} | Response Time: {duration} | Data: {request_dict['message']}")
         print(" ")
 
     return response_json
+
 
 def predictres(requestid):
     request_dict = json.loads(returnreq(requestid))
     
     return request_dict
+
 
 def returnallreq():
     allreqs = returnkeys()
