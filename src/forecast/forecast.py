@@ -2,7 +2,7 @@ import os
 from forecast.redis import createreq, returnreq, savereq, returnkeys
 from pathlib import Path
 from time import perf_counter
-# from memory_profiler import profile
+from memory_profiler import profile
 
 import numpy as np
 import datetime
@@ -12,7 +12,7 @@ import json
 import joblib
 
 # check if the "UNRELIABLE" environment variable exists
-profile = os.environ.get("ENABLE_PROFILING")
+enableprofiling = os.environ.get("ENABLE_PROFILING")
 
 modelpkldump_path = Path(__file__).parent.parent.parent
 
@@ -31,7 +31,7 @@ def generatereq():
 
 def submitreq(requestid, data):
 
-    if profile is not None and profile == "True": 
+    if enableprofiling is not None and enableprofiling == "True": 
         start = perf_counter()
 
     message = "In Progress"
@@ -61,7 +61,7 @@ def submitreq(requestid, data):
 
     createreq(requestid, json.dumps(request_json))
 
-    if profile is not None and profile == "True": 
+    if enableprofiling is not None and enableprofiling == "True": 
         duration = perf_counter() - start
 
         print(" ")
@@ -69,10 +69,10 @@ def submitreq(requestid, data):
         print(" ")
 
 
-#@profile
+@profile
 def predictmodel(requestid):
 
-    if profile is not None and profile == "True": 
+    if enableprofiling is not None and enableprofiling == "True": 
         start = perf_counter()
 
     request_dict = json.loads(returnreq(requestid))
@@ -104,7 +104,7 @@ def predictmodel(requestid):
 
     savereq(requestid, dumped_json)
 
-    if profile is not None and profile == "True": 
+    if enableprofiling is not None and enableprofiling == "True": 
         duration = perf_counter() - start
 
         print(" ")
