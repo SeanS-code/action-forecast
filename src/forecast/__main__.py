@@ -17,10 +17,10 @@ def main():
     forecast.predictres(requestid)
 
     # Profiling
-    
+
     # Submit Request / Predict Reponse
-    # profile.runctx('forecast.submitreq(data)', globals(), locals(), filename="prof1.out")
-    # profile.runctx('forecast.predictres(requestid)', globals(), locals(), filename="prof2.out")
+    # profile.runctx('forecast.', globals(), locals(), filename="prof1.out")
+    # profile.runctx('forecast.', globals(), locals(), filename="prof2.out")
 
 
 def api():
@@ -29,9 +29,9 @@ def api():
 
 
 if __name__ == '__main__':
-    #export ENABLE_PROFILING=1 before calling forecast
+    # export ENABLE_PROFILING=1 before calling forecast
     if enableprofiling is not None and enableprofiling == "True":
-        cProfile.run('main()', '/tmp/profile.log')
+        cProfile.run('main()', 'profile.log')
         # snakeviz profile.log in terminal
-        
+
     main()

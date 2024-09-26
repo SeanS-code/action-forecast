@@ -31,7 +31,7 @@ async def predictreq(request: Request, background_tasks: BackgroundTasks):
     requestid = forecast.generatereq()
 
     # check if the "UNRELIABLE" environment variable exists
-    if unreliable is not None and unreliable == "True": 
+    if unreliable is not None and unreliable == "True":
         background_tasks.add_task(asyncreqsubmit, requestid, data)
     else:
         forecast.submitreq(requestid, data)
@@ -58,4 +58,3 @@ async def returnallreq():
 
 # GraphQL endpoint
 app.include_router(graphql_app, prefix="/graphql")
-

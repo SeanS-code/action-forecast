@@ -3,6 +3,7 @@
 dist/
 data/
 venv/
+.github/
 
 # Files
 README-breakdown.md

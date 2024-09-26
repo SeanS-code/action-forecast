@@ -31,7 +31,7 @@ def generatereq():
 
 def submitreq(requestid, data):
 
-    if enableprofiling is not None and enableprofiling == "True": 
+    if enableprofiling is not None and enableprofiling == "True":
         start = perf_counter()
 
     message = "In Progress"
@@ -61,7 +61,7 @@ def submitreq(requestid, data):
 
     createreq(requestid, json.dumps(request_json))
 
-    if enableprofiling is not None and enableprofiling == "True": 
+    if enableprofiling is not None and enableprofiling == "True":
         duration = perf_counter() - start
 
         print(" ")
@@ -72,7 +72,7 @@ def submitreq(requestid, data):
 @profile
 def predictmodel(requestid):
 
-    if enableprofiling is not None and enableprofiling == "True": 
+    if enableprofiling is not None and enableprofiling == "True":
         start = perf_counter()
 
     request_dict = json.loads(returnreq(requestid))
@@ -104,10 +104,11 @@ def predictmodel(requestid):
 
     savereq(requestid, dumped_json)
 
-    if enableprofiling is not None and enableprofiling == "True": 
+    if enableprofiling is not None and enableprofiling == "True":
         duration = perf_counter() - start
 
         print(" ")
+        # skipcq: FLK-E501
         print(f"--- xxx2 {requestid} | Response Time: {duration} | Data: {request_dict['message']}")
         print(" ")
 
@@ -116,7 +117,7 @@ def predictmodel(requestid):
 
 def predictres(requestid):
     request_dict = json.loads(returnreq(requestid))
-    
+
     return request_dict
 
 
