@@ -2,5 +2,5 @@ projectKey=action-forecast
 serverUrl=http://localhost:9000
 serverVersion=10.6.0.92116
 dashboardUrl=http://localhost:9000/dashboard?id=action-forecast
-ceTaskId=6289aaa0-e1eb-40c3-b67f-8537cc186495
-ceTaskUrl=http://localhost:9000/api/ce/task?id=6289aaa0-e1eb-40c3-b67f-8537cc186495
+ceTaskId=0521b7d6-0eda-4eaf-9565-9051d9107667
+ceTaskUrl=http://localhost:9000/api/ce/task?id=0521b7d6-0eda-4eaf-9565-9051d9107667
