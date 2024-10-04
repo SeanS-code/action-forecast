@@ -1,9 +1,11 @@
 # tests/test_model.py
 
 import pytest
-from model import model
 import pandas as pd
 from unittest.mock import patch
+
+# from model import model
+
 
 @pytest.fixture(autouse=True)
 def mock_read_csv():
