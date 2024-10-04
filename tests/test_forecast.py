@@ -30,12 +30,16 @@ def mock_savereq(mocker):
 def mock_model(mocker):
     mock_model = MagicMock()
     mock_model.predict.return_value = np.array([[42]])
-    mocker.patch('forecast.joblib.load', return_value=mock_model)
+    mocker.patch('joblib.load', return_value=mock_model)
     return mock_model
 
 @pytest.fixture
 def mock_returnkeys(mocker):
     return mocker.patch('forecast.redis.returnkeys')
+
+@pytest.fixture
+def mock_redis(mocker):
+    return mocker.patch('redis.Redis')
 
 def test_submitreq(mock_createreq):
     requestid = 'test_request'
