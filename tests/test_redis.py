@@ -7,7 +7,7 @@ from forecast import redis
 
 @pytest.fixture
 def mock_redis(mocker):
-    return mocker.patch('loadredis.redis.Redis')
+    return mocker.patch('redis.loadredis.redis.Redis')
 
 def test_createreq(mock_redis):
     mock_redis_instance = mock_redis.return_value
