@@ -2,7 +2,8 @@
 
 from unittest.mock import MagicMock
 import pytest
-from forecast import forecast, model
+from forecast import forecast
+from model import model
 
 @pytest.fixture
 def mock_model(mocker):
