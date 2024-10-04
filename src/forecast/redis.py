@@ -10,7 +10,7 @@ def loadredis():
     return r
 
 def createreq(requestid: str, req: str):
-    loadredis()
+    r = loadredis()
     r.set(requestid, req)
     return r.save()
     # https://realpython.com/python-redis/ - have to see what happens if redis grows
