@@ -5,8 +5,9 @@ r = None
 
 # Load the redis
 def loadredis():
-    r = redis.Redis(host='localhost', port=6379, db=0)
-
+    if r is None:
+        r = redis.Redis(host='localhost', port=6379, db=0)
+    return r
 
 def createreq(requestid: str, req: str):
     loadredis()
@@ -20,19 +21,19 @@ def createreq(requestid: str, req: str):
 
 
 def savereq(requestid: str, req: str):
-    loadredis()
+    r = loadredis()
     r.set(requestid, req)
     return r.save()
 
 
 def returnreq(requestid: str):
-    loadredis()
+    r = loadredis()
     dataenc = r.get(requestid)
     return dataenc
 
 
 def returnkeys():
-    loadredis()
+    r = loadredis()
     allkeys = r.keys()
     # print(allkeys)
     return allkeys
