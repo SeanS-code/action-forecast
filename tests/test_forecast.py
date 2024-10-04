@@ -33,7 +33,6 @@ def mock_model(mocker):
     mocker.patch('forecast.joblib.load', return_value=mock_model)
     return mock_model
 
-
 @pytest.fixture
 def mock_returnkeys(mocker):
     return mocker.patch('forecast.redis.returnkeys')
