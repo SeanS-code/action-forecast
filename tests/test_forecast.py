@@ -40,13 +40,10 @@ def mock_model(mocker):
 
 @pytest.fixture
 def mock_redis(mocker):
-
     # Create a mock Redis instance
     mock_redis_instance = MagicMock()
-
     # Patch redis.Redis to return the mock instance
     mocker.patch('redis.Redis', return_value=mock_redis_instance)
-
     return mock_redis_instance
 
 

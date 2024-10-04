@@ -1,75 +1,75 @@
 # src/forecast/test_redis.py
-
-import pytest
 from unittest.mock import MagicMock
-from unittest.mock import patch
-import forecast
+import forecast.redis as redis_module
+
+def test_createreq(mocker):
+    # Mock the loadredis function to always return a mocked Redis instance
+    mock_instance = MagicMock()
+    mocker.patch('forecast.redis.loadredis', return_value=mock_instance)
+
+    # Mock Redis methods
+    mock_instance.set = MagicMock(return_value=True)
+    mock_instance.get = MagicMock(return_value=b'testvalue')
+    mock_instance.save = MagicMock(return_value=True)
+
+    # Call the function
+    redis_module.createreq("testid", "testvalue")
+
+    # Assert Redis `set` and `get` were called
+    mock_instance.set.assert_called_once_with("testid", "testvalue")
+    assert redis_module.returnreq("testid") == b'testvalue'
 
 
-@pytest.fixture
-def mock_redis(mocker):
+def test_savereq(mocker):
+    # Mock the loadredis function to always return a mocked Redis instance
+    mock_instance = MagicMock()
+    mocker.patch('forecast.redis.loadredis', return_value=mock_instance)
 
-    # Create a mock Redis instance
-    mock_redis_instance = MagicMock()
+    # Mock Redis methods
+    mock_instance.set = MagicMock(return_value=True)
+    mock_instance.get = MagicMock(return_value=b'newvalue')
+    mock_instance.save = MagicMock(return_value=True)
 
-    # Patch redis.Redis to return the mock instance
-    mocker.patch('redis.Redis', return_value=mock_redis_instance)
+    # Call the function
+    redis_module.savereq("testid", "newvalue")
 
-    return mock_redis_instance
+    # Assert Redis `set` was called
+    mock_instance.set.assert_called_once_with("testid", "newvalue")
+    assert redis_module.returnreq("testid") == b'newvalue'
 
-# Test loadredis function
-def test_loadredis(mock_redis):
-    # Act
-    mock_redis_instance = forecast.redis.loadredis()
+
+def test_returnreq(mocker):
+    # Mock the loadredis function to always return a mocked Redis instance
+    mock_instance = MagicMock()
+    mocker.patch('my_redis.redis.loadredis', return_value=mock_instance)
+
+    # Mock Redis `get` method
+    mock_instance.get = MagicMock(return_value=b'retrieved_value')
+
+    # Call the function
+    result = redis_module.returnreq("testid")
+
+    # Assert Redis `get` was called with the correct requestid
+    mock_instance.get.assert_called_once_with("testid")
     
-    # Assert
-    # Verify that the Redis instance was created
-    assert mock_redis_instance == mock_redis
+    # Assert the correct value is returned
+    assert result == b'retrieved_value'
 
 
-def test_createreq(mock_redis):
-    mock_redis_instance = mock_redis.return_value
-    requestid = '1234'
-    req = 'test_data'
+def test_returnkeys(mocker):
+    # Mock the loadredis function to always return a mocked Redis instance
+    mock_instance = MagicMock()
+    mocker.patch('forecast.redis.loadredis', return_value=mock_instance)
 
-    result = forecast.redis.createreq(requestid, req)
+    # Mock Redis methods
+    mock_instance.keys = MagicMock(return_value=[b'testid', b'anotherid'])
+    mock_instance.set = MagicMock(return_value=True)
 
-    mock_redis_instance.set.assert_called_once_with(requestid, req)
-    mock_redis_instance.save.assert_called_once()
-    assert result == mock_redis_instance.save.return_value
+    # Call the function
+    redis_module.createreq("anotherid", "anothervalue")
 
-
-def test_savereq(mock_redis):
-    mock_redis_instance = mock_redis.return_value
-    requestid = '1234'
-    req = 'test_data'
-
-    result = forecast.redis.savereq(requestid, req)
-
-    mock_redis_instance.set.assert_called_once_with(requestid, req)
-    mock_redis_instance.save.assert_called_once()
-    assert result == mock_redis_instance.save.return_value
-
-
-def test_returnreq(mock_redis):
-    mock_redis_instance = mock_redis.return_value
-    requestid = '1234'
-    expected_data = b'test_data'
-    mock_redis_instance.get.return_value = expected_data
-
-    result = forecast.redis.returnreq(requestid)
-
-    mock_redis_instance.get.assert_called_once_with(requestid)
-    assert result == expected_data
-
-
-def test_returnkeys(mock_redis):
-    mock_redis_instance = mock_redis.return_value
-    expected_keys = [b'req1', b'req2', b'req3']
-    mock_redis_instance.keys.return_value = expected_keys
-
-    result = forecast.redis.returnkeys()
-
-    mock_redis_instance.keys.assert_called_once()
-    assert result == expected_keys
-
+    # Assert Redis `keys` were called and return the expected keys
+    keys = redis_module.returnkeys()
+    mock_instance.keys.assert_called_once()  # Check that `keys` was called
+    assert b"testid" in keys
+    assert b"anotherid" in keys

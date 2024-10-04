@@ -100,6 +100,15 @@ Issues = "https://github.com/SeanS-code/action-forecast/issues"
 # https://github.com/psf/black/blob/main/pyproject.toml
 # https://sources.debian.org/src/aiodogstatsd/0.16.0-2/pyproject.toml/
 
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+
+
 [tool.black]
 line-length = 100
 target-version = ['py38', 'py39', 'py310']
