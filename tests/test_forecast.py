@@ -14,17 +14,21 @@ from unittest.mock import MagicMock
 def mock_uuid(mocker):
     return mocker.patch('uuid.uuid4', return_value='1234-abcd')
 
+
 @pytest.fixture
 def mock_createreq(mocker):
     return mocker.patch('forecast.redis.createreq')
+
 
 @pytest.fixture
 def mock_returnreq(mocker):
     return mocker.patch('forecast.redis.returnreq')
 
+
 @pytest.fixture
 def mock_savereq(mocker):
     return mocker.patch('forecast.redis.savereq')
+
 
 @pytest.fixture
 def mock_model(mocker):
@@ -33,13 +37,23 @@ def mock_model(mocker):
     mocker.patch('joblib.load', return_value=mock_model)
     return mock_model
 
+
+@pytest.fixture
+def mock_redis(mocker):
+
+    # Create a mock Redis instance
+    mock_redis_instance = MagicMock()
+
+    # Patch redis.Redis to return the mock instance
+    mocker.patch('redis.Redis', return_value=mock_redis_instance)
+
+    return mock_redis_instance
+
+
 @pytest.fixture
 def mock_returnkeys(mocker):
     return mocker.patch('forecast.redis.returnkeys')
 
-@pytest.fixture
-def mock_redis(mocker):
-    return mocker.patch('redis.Redis')
 
 def test_submitreq(mock_createreq):
     requestid = 'test_request'
