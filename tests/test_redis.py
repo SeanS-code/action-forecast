@@ -13,13 +13,23 @@ def mock_redis(mocker):
     mock_redis_instance = MagicMock()
 
     # Patch redis.Redis to return the mock instance
-    mocker.patch('redis.loadredis.redis.Redis', return_value=mock_redis_instance)
+    mocker.patch('redis.redis.Redis', return_value=mock_redis_instance)
 
     return mock_redis_instance
 
+# Test loadredis function
+def test_loadredis(mock_redis):
+    # Act
+    mock_redis_instance = redis.loadredis()
+    
+    # Assert
+    # Verify that the Redis instance was created
+    assert mock_redis_instance == mock_redis
+
+
 def test_createreq(mock_redis):
     mock_redis_instance = mock_redis.return_value
-    requestid = 'test_request'
+    requestid = '1234'
     req = 'test_data'
 
     result = redis.createreq(requestid, req)
@@ -28,9 +38,10 @@ def test_createreq(mock_redis):
     mock_redis_instance.save.assert_called_once()
     assert result == mock_redis_instance.save.return_value
 
+
 def test_savereq(mock_redis):
     mock_redis_instance = mock_redis.return_value
-    requestid = 'test_request'
+    requestid = '1234'
     req = 'test_data'
 
     result = redis.savereq(requestid, req)
@@ -39,9 +50,10 @@ def test_savereq(mock_redis):
     mock_redis_instance.save.assert_called_once()
     assert result == mock_redis_instance.save.return_value
 
+
 def test_returnreq(mock_redis):
     mock_redis_instance = mock_redis.return_value
-    requestid = 'test_request'
+    requestid = '1234'
     expected_data = b'test_data'
     mock_redis_instance.get.return_value = expected_data
 
@@ -49,6 +61,7 @@ def test_returnreq(mock_redis):
 
     mock_redis_instance.get.assert_called_once_with(requestid)
     assert result == expected_data
+
 
 def test_returnkeys(mock_redis):
     mock_redis_instance = mock_redis.return_value
