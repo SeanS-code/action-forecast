@@ -1,13 +1,13 @@
+# src/forecast/test_redis.py
+
 import pytest
 from unittest.mock import patch
 from forecast import redis
 
-# src/forecast/test_redis.py
-
 
 @pytest.fixture
 def mock_redis(mocker):
-    return mocker.patch('redis.loadredis.redis.Redis')
+    return mocker.patch('redis.loadredis')
 
 def test_createreq(mock_redis):
     mock_redis_instance = mock_redis.return_value
@@ -51,3 +51,4 @@ def test_returnkeys(mock_redis):
 
     mock_redis_instance.keys.assert_called_once()
     assert result == expected_keys
+
