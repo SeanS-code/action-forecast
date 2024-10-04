@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from .redis import createreq, savereq, returnreq, returnkeys
+from forecast import redis
 
 # src/forecast/test_redis.py
 
@@ -14,7 +14,7 @@ def test_createreq(mock_redis):
     requestid = 'test_request'
     req = 'test_data'
 
-    result = createreq(requestid, req)
+    result = redis.createreq(requestid, req)
 
     mock_redis_instance.set.assert_called_once_with(requestid, req)
     mock_redis_instance.save.assert_called_once()
@@ -25,7 +25,7 @@ def test_savereq(mock_redis):
     requestid = 'test_request'
     req = 'test_data'
 
-    result = savereq(requestid, req)
+    result = redis.savereq(requestid, req)
 
     mock_redis_instance.set.assert_called_once_with(requestid, req)
     mock_redis_instance.save.assert_called_once()
@@ -37,7 +37,7 @@ def test_returnreq(mock_redis):
     expected_data = b'test_data'
     mock_redis_instance.get.return_value = expected_data
 
-    result = returnreq(requestid)
+    result = redis.returnreq(requestid)
 
     mock_redis_instance.get.assert_called_once_with(requestid)
     assert result == expected_data
@@ -47,7 +47,7 @@ def test_returnkeys(mock_redis):
     expected_keys = [b'req1', b'req2', b'req3']
     mock_redis_instance.keys.return_value = expected_keys
 
-    result = returnkeys()
+    result = redis.returnkeys()
 
     mock_redis_instance.keys.assert_called_once()
     assert result == expected_keys
