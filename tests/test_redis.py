@@ -41,7 +41,7 @@ def test_savereq(mocker):
 def test_returnreq(mocker):
     # Mock the loadredis function to always return a mocked Redis instance
     mock_instance = MagicMock()
-    mocker.patch('my_redis.redis.loadredis', return_value=mock_instance)
+    mocker.patch('forecast.redis.loadredis', return_value=mock_instance)
 
     # Mock Redis `get` method
     mock_instance.get = MagicMock(return_value=b'retrieved_value')

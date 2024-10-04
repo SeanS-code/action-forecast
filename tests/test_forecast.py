@@ -8,16 +8,12 @@ import joblib
 import datetime
 
 from forecast import forecast
+import forecast.redis as redis_module
 from unittest.mock import MagicMock
 
 @pytest.fixture
 def mock_uuid(mocker):
     return mocker.patch('uuid.uuid4', return_value='1234-abcd')
-
-
-@pytest.fixture
-def mock_createreq(mocker):
-    return mocker.patch('forecast.redis.createreq')
 
 
 @pytest.fixture
@@ -52,10 +48,18 @@ def mock_returnkeys(mocker):
     return mocker.patch('forecast.redis.returnkeys')
 
 
-def test_submitreq(mock_createreq):
+def test_submitreq(mocker):
+
+    # Mock the createreq function
+    mock_createreq = mocker.patch('forecast.redis.createreq')
+
+    # Set the mock's return value
+    mock_createreq.return_value = True
+
     requestid = 'test_request'
     data = {'features': [1, 2, 3]}
-    forecast.submitreq(requestid, data)
+
+    status = forecast.submitreq(requestid, data)
 
     # Verify createreq was called with correct parameters
     encoded_data = base64.b64encode(json.dumps(data).encode('utf-8')).decode('utf-8')
@@ -77,6 +81,8 @@ def test_submitreq(mock_createreq):
     }
 
     mock_createreq.assert_called_once_with(requestid, json.dumps(expected_request_json))
+
+    assert status is True
 
 def test_predictmodel(mock_returnreq, mock_model, mock_savereq):
     # Mock returnreq to return a specific request format

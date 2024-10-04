@@ -101,12 +101,13 @@ Issues = "https://github.com/SeanS-code/action-forecast/issues"
 # https://sources.debian.org/src/aiodogstatsd/0.16.0-2/pyproject.toml/
 
 
-[tool.pytest.ini_options]
-minversion = "6.0"
-addopts = "-ra -q"
-testpaths = [
-    "tests",
-]
+# quiet pytest - reducing output for the pytests calls
+# [tool.pytest.ini_options]
+# minversion = "6.0"
+# addopts = "-ra -q"
+# testpaths = [
+#     "tests",
+# ]
 
 
 [tool.black]

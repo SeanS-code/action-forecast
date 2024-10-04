@@ -82,6 +82,8 @@ def submitreq(requestid, data):
         print(f"--- xxx1 {requestid} | Response Time: {duration}, Data: {message}")
         print(" ")
 
+    return True
+
 
 @profile
 def predictmodel(requestid):
