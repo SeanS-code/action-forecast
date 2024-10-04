@@ -13,7 +13,7 @@ def mock_redis(mocker):
     mock_redis_instance = MagicMock()
 
     # Patch redis.Redis to return the mock instance
-    mocker.patch('redis.redis.Redis', return_value=mock_redis_instance)
+    mocker.patch('redis.loadredis.redis.Redis', return_value=mock_redis_instance)
 
     return mock_redis_instance
 
