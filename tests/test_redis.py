@@ -1,17 +1,21 @@
 # src/forecast/test_redis.py
 
 import pytest
+from unittest.mock import MagicMock
 from unittest.mock import patch
 from forecast import redis
 
 
 @pytest.fixture
 def mock_redis(mocker):
-    return mocker.patch('redis.Redis')
 
-# @pytest.fixture
-# def mock_redis(mocker):
-#     return mocker.patch('redis.loadredis')
+    # Create a mock Redis instance
+    mock_redis_instance = MagicMock()
+
+    # Patch redis.Redis to return the mock instance
+    mocker.patch('redis.redis.Redis', return_value=mock_redis_instance)
+
+    return mock_redis_instance
 
 def test_createreq(mock_redis):
     mock_redis_instance = mock_redis.return_value
