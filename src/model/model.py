@@ -47,7 +47,9 @@ y = y.fillna(y.median())
 # https://www.kaggle.com/code/dansbecker/model-validation
 train_X, val_X, train_y, val_y = train_test_split(X.values, y.values, test_size=0.2, random_state = 1)
 
-model = DecisionTreeRegressor(random_state=1)
+# ccp_alpha=0.00 - ccp_alpha (default value is 0.0) means no pruning or less aggressive pruning.
+# If you want the tree to grow without pruning, you can leave ccp_alpha as 0.0.
+model = DecisionTreeRegressor(random_state=1, ccp_alpha=0.00)
 model.fit(train_X, train_y)
 
 # get predicted prices on validation data

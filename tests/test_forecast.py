@@ -93,7 +93,7 @@ def test_predictres(mock_returnreq):
     })
 
     requestid = 'test_request'
-    result = predictres(requestid)
+    result = forecast.predictres(requestid)
     assert result['requestid'] == 'test_request'
     assert result['message'] == 'Complete'
 
@@ -101,5 +101,5 @@ def test_returnallreq(mock_returnkeys):
     # Mock returnkeys response
     mock_returnkeys.return_value = ['req1', 'req2', 'req3']
 
-    result = returnallreq()
+    result = forecast.returnallreq()
     assert result == ['req1', 'req2', 'req3']
