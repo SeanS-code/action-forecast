@@ -1,7 +1,7 @@
 # tests/test_model.py
 
 import pytest
-from model import model
+from forecast import model
 
 def test_model_main():
     result = model.main()

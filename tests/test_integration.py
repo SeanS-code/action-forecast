@@ -1,8 +1,7 @@
 # tests/test_integration.py
 
 import pytest
-from forecast import forecast, forecastapi
-from model import model
+from forecast import forecast, model
 
 def test_forecast_model_integration():
     forecast_result = forecast.main()
