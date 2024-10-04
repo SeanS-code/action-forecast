@@ -29,7 +29,6 @@ maintainers = [
 ]
 
 dependencies = [
-  "pytest == 6.2.5",
   "numpy>=1.23.5; python_version<'3.12'",
   "pandas>=2.1.2; python_version<'3.12'",
   "pytz==2024.1",
@@ -100,6 +99,16 @@ Issues = "https://github.com/SeanS-code/action-forecast/issues"
 # https://ichard26-testblackdocs.readthedocs.io/en/refactor_docs/pyproject_toml.html#configuration-format
 # https://github.com/psf/black/blob/main/pyproject.toml
 # https://sources.debian.org/src/aiodogstatsd/0.16.0-2/pyproject.toml/
+
+
+# quiet pytest - reducing output for the pytests calls
+# [tool.pytest.ini_options]
+# minversion = "6.0"
+# addopts = "-ra -q"
+# testpaths = [
+#     "tests",
+# ]
+
 
 [tool.black]
 line-length = 100

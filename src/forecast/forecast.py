@@ -19,8 +19,22 @@ modelpkldump_path = Path(__file__).parent.parent.parent
 # 'data/model.pkl'
 modelpkldump_file = modelpkldump_path / "data" / "model.pkl"
 
+# Pytest fails as the joblib.load() function is being called 
+# during the import of the fc module, and it's trying to load
+# the file modelpkldump_file before the mocking has a 
+# chance to take effect
+# refactor your code so that joblib.load() is called lazily
+
+# Remove global loading of the model
+model = None
+
 # Load the model
-model = joblib.load(modelpkldump_file)
+# def load_model(modelpkldump_file):
+def loadmodel():
+    global model
+    if model is None:
+        model = joblib.load(modelpkldump_file)
+    return model
 
 
 def generatereq():
@@ -68,6 +82,8 @@ def submitreq(requestid, data):
         print(f"--- xxx1 {requestid} | Response Time: {duration}, Data: {message}")
         print(" ")
 
+    return True
+
 
 @profile
 def predictmodel(requestid):
@@ -86,6 +102,7 @@ def predictmodel(requestid):
     current_date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S.%f")
 
     start = perf_counter()
+    model = loadmodel()
     prediction = model.predict(input_features)
     duration = perf_counter() - start
 
