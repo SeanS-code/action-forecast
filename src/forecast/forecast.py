@@ -4,6 +4,7 @@ from pathlib import Path
 from time import perf_counter
 from memory_profiler import profile
 
+import tensorflow as tf
 import numpy as np
 import datetime
 import uuid
@@ -14,14 +15,15 @@ import joblib
 # check if the "UNRELIABLE" environment variable exists
 enableprofiling = os.environ.get("ENABLE_PROFILING")
 
-modelpkldump_path = Path(__file__).parent.parent.parent
+# modelpkldump_path = Path(__file__).parent.parent.parent
+modelsave_path = Path(__file__).parent.parent.parent
 
 # 'data/model.pkl'
-modelpkldump_file = modelpkldump_path / "data" / "model.pkl"
+# modelpkldump_file = modelpkldump_path / "data" / "model.pkl"
+modelkerasfile = modelsave_path / "data" / "saved_model.keras"
 
 # Load the model
-model = joblib.load(modelpkldump_file)
-
+model = tf.keras.models.load_model(modelkerasfile)
 
 def generatereq():
     requestid = str(uuid.uuid4())
@@ -89,13 +91,14 @@ def predictmodel(requestid):
     prediction = model.predict(input_features)
     duration = perf_counter() - start
 
+    prediction = prediction.tolist()
     prediction_json = json.dumps(prediction[0])
 
     predenc = (base64.b64encode(prediction_json.encode('utf-8'))).decode('utf-8')
 
     request_dict["message"] = "Complete"
 
-    request_dict["response"]["data"]["result"] = predenc
+    request_dict["response"]["data"]["result"] = prediction_json
     request_dict["response"]["restime"] = duration
     request_dict["response"]["resdate"] = current_date
 

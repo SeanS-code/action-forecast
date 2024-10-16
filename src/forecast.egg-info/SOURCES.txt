@@ -16,6 +16,9 @@ src/forecast/graphql/schema.py
 src/model/__init__.py
 src/model/__main__.py
 src/model/model.py
+src/modeltf/__init__.py
+src/modeltf/__main__.py
+src/modeltf/model.py
 src/tests/test_forecast.py
 tests/test_forecast.py
 tests/test_integration.py
