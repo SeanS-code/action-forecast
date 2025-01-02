@@ -2,4 +2,3 @@
 forecast = forecast.__main__:main
 forecastapi = forecast.__main__:api
 forecastmodel = model.__main__:main
-forecastmodeltf = modeltf.__main__:main
