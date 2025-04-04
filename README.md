@@ -4,4 +4,5 @@
 
 ## Description
 
-A webserver that can recieve data from users and send it to action forecasting models. Model response is then outputted by the webserver to a created endpoint.
+An interactive webserver that allows data inputted from a user to be sent and used by a machine learning model for forecasting. The user is then given a ticket in the form of an endpoint
+to then go and recieve the output of that model.
